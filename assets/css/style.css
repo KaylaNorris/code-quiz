@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+.questions {
+    border: solid 5px coral;
+    margin: 100px;
+    padding: 20px;
+}
+
+.startButton {
+    margin: 20px;
+    background-color: cadetblue;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
