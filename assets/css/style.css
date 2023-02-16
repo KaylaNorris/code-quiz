@@ -14,14 +14,11 @@ a {
     display: flex;
     justify-content: center;
     text-align: center;
-    
-}
-
-.questions {
     border: solid 5px coral;
     margin: 100px;
     padding: 20px;
 }
+
 
 .start-button {
     margin: 20px;
