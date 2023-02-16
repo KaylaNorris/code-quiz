@@ -68,6 +68,7 @@ var timerInterval = setInterval(function() {
 }, 1000);
 //starts questions
 render(quizQuestions);
+
 });
 
 //generates quiz questions
@@ -81,6 +82,8 @@ function render(quizQuestions) {
 }
 
     var currentQuestionsIndex = 0;
+    var score = 0
+    var deduction = 5
     var question = questions[currentQuestionsIndex];
     var titleEl = document.getElementById('question-text');
     titleEl.textContent = question.question;
@@ -96,10 +99,28 @@ function render(quizQuestions) {
         choiceNode.textContent = i + 1 + '. ' + choice;
 
         //display on the page
-        multipleChoice.appendChild(choiceNode);
+        multipleChoice.appendChild(choiceNode);  
+        choiceNode.addEventListener("click", (grade)) 
+};
 
-   
+//grade answer
+function grade(event) {
+    var button = event.target;
+
+    if (button.matches("button")) {
+        var gradingDiv = document.createElement("div");
+        gradingDiv.setAttribute('id', 'gradingDiv');
+
+
+    if (button.textContent == questions[currentQuestionsIndex].answer) {
+        score ++;
+        multipleChoice.textContent = "Great! That answer is correct";
+    } else {
+        secondsLeft = secondsLeft - deduction;
+        multipleChoice.textContent = "Incorrect. The correct answer is " + questions[currentQuestionsIndex].answer;
     }
+}
+}
 
 
     // multipleChoice.textContent = "";
