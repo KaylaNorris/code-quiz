@@ -1,8 +1,8 @@
-let startButton = document.querySelector(".start-button")
-let timeLeft = document.querySelector(".timer")
-let secondsLeft = 75;
+var startButton = document.querySelector(".start-button")
+var timeLeft = document.querySelector(".timer")
+var secondsLeft = 75;
 
-let questions = [ 
+var questions = [ 
     {
         question: "What does DOM stand for?",
         choices: ["Do One More", "Document Object Model", "Domain Object Model", "Document One Model"],
@@ -41,11 +41,11 @@ let questions = [
 ];
 
 
-let multipleChoice = document.querySelector("#multiple-choice");
-let initialText = document.querySelector("#initial-text");
-let quizQuestions = 0;
+var multipleChoice = document.querySelector("#multiple-choice");
+var initialText = document.querySelector("#initial-text");
+var quizQuestions = 0;
 
-let questionBox = document.querySelector("#question-content");
+var questionBox = document.querySelector("#question-content");
 
 //hides question-box div
 function initialScreen () {
@@ -56,7 +56,7 @@ initialScreen()
 startButton.addEventListener("click", function() {
     questionBox.setAttribute("style", "visibility:show;")
 //starts timer on click
-let timerInterval = setInterval(function() {
+var timerInterval = setInterval(function() {
     if (secondsLeft > 0) {
         timeLeft.textContent = "Timer: " + secondsLeft;
         secondsLeft--;
@@ -73,31 +73,70 @@ render(quizQuestions);
 //generates quiz questions
 function render(quizQuestions) {
     initialText.setAttribute("style", "display:none;")
-    let question = questions[0]
-    questionBox.textContent = "";
-    let quizQuestion = question.question;
-    questionBox.textContent = quizQuestion;
-    multipleChoice.textContent = "";
-    // create list element
-    let listEl = document.createElement("ul");
-    //create list items
-    let choiceOne = document.createElement("li");
-    let choiceTwo = document.createElement("li");
-    let choiceThree = document.createElement("li");
-    let choiceFour = document.createElement("li");
-    choiceOne.textContent = question.choices[0];
-    choiceTwo.textContent = question.choices[1];
-    choiceThree.textContent = question.choices[2];
-    choiceFour.textContent = question.choices[3];
+    // var question = questions[0]
+    // questionBox.textContent = "";
+    // var quizQuestion = question.question;
+    // questionBox.textContent = quizQuestion;
 
-     //append list items to list element
-     listEl.appendChild(choiceOne);
-     listEl.appendChild(choiceTwo);
-     listEl.appendChild(choiceThree);
-     listEl.appendChild(choiceFour);
+}
+
+    var currentQuestionsIndex = 0;
+    var question = questions[currentQuestionsIndex];
+    var titleEl = document.getElementById('question-text');
+    titleEl.textContent = question.question;
+
+    multipleChoice.innerHTML = '';
+    for (var i = 0; i < question.choices.length; i++) {
+        //create new button for each choice
+        var choice = question.choices[i];
+        var choiceNode = document.createElement('button');
+        choiceNode.setAttribute('class', 'choice');
+        choiceNode.setAttribute('value', choice);
+
+        choiceNode.textContent = i + 1 + '. ' + choice;
+
+        //display on the page
+        multipleChoice.appendChild(choiceNode);
+
+   
+    }
+
+
+    // multipleChoice.textContent = "";
+    // // create list element
+    // let listEl = document.createElement("ul");
+    // //create list items
+    // let choiceOne = document.createElement("li");
+    // let choiceTwo = document.createElement("li");
+    // let choiceThree = document.createElement("li");
+    // let choiceFour = document.createElement("li");
+    // choiceOne.textContent = question.choices[0];
+    // choiceTwo.textContent = question.choices[1];
+    // choiceThree.textContent = question.choices[2];
+    // choiceFour.textContent = question.choices[3];
+
+    //  //append list items to list element
+    //  listEl.appendChild(choiceOne);
+    //  listEl.appendChild(choiceTwo);
+    //  listEl.appendChild(choiceThree);
+    //  listEl.appendChild(choiceFour);
     
-    //append list to multiple-choice ul
-    multipleChoice.appendChild(listEl);
+    // //append list to multiple-choice ul
+    // multipleChoice.appendChild(listEl);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    
     // multipleChoice.textContent = listEl
   
@@ -114,7 +153,7 @@ function render(quizQuestions) {
     
     // multipleChoice.textContent = quizChoice;
     
-}    
+
     
 
     
