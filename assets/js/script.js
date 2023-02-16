@@ -41,15 +41,20 @@ let questions = [
 ];
 
 
-let multipleChoice = document.querySelector(".multiple-choice");
+let multipleChoice = document.querySelector("#multiple-choice");
+let initialText = document.querySelector("#initial-text");
 let quizQuestions = 0;
-let choiceList = document.createElement("ul");
-let questionBox = document.querySelector(".questions");
 
+let questionBox = document.querySelector("#question-content");
 
-// function countdown()KEEP TO REVERT TO ORIGINAL
+//hides question-box div
+function initialScreen () {
+    questionBox.setAttribute("style", "visibility:hidden;")
+}
+initialScreen()
 
 startButton.addEventListener("click", function() {
+    questionBox.setAttribute("style", "visibility:show;")
 //starts timer on click
 let timerInterval = setInterval(function() {
     if (secondsLeft > 0) {
@@ -58,6 +63,7 @@ let timerInterval = setInterval(function() {
     } else {
         timeLeft.textContent = "GAME OVER"
         clearInterval(timerInterval);
+        return;
     }
 }, 1000);
 //starts questions
@@ -66,35 +72,65 @@ render(quizQuestions);
 
 //generates quiz questions
 function render(quizQuestions) {
+    initialText.setAttribute("style", "display:none;")
+    let question = questions[0]
     questionBox.textContent = "";
-    //loops through questions
-    for (let i = 0; i < questions.length; i++) {
-        let quizQuestion = questions[quizQuestions].question;
-        // let quizChoices = questions[quizQuestions].choices;
-        questionBox.textContent = quizQuestion;
-        questionBox.append(questions[i]);
-    }
+    let quizQuestion = question.question;
+    questionBox.textContent = quizQuestion;
     multipleChoice.textContent = "";
-    for (let i = 0; i < questions.length; i++) {
-        let quizChoices = questions[quizQuestions].choices;
-        multipleChoice.textContent = quizChoices;
-        multipleChoice.append(choices[i]);
-    }
+    // create list element
+    let listEl = document.createElement("ul");
+    //create list items
+    let choiceOne = document.createElement("li");
+    let choiceTwo = document.createElement("li");
+    let choiceThree = document.createElement("li");
+    let choiceFour = document.createElement("li");
+    choiceOne.textContent = question.choices[0];
+    choiceTwo.textContent = question.choices[1];
+    choiceThree.textContent = question.choices[2];
+    choiceFour.textContent = question.choices[3];
+
+     //append list items to list element
+     listEl.appendChild(choiceOne);
+     listEl.appendChild(choiceTwo);
+     listEl.appendChild(choiceThree);
+     listEl.appendChild(choiceFour);
+    
+    //append list to multiple-choice ul
+    multipleChoice.appendChild(listEl);
+   
+    // multipleChoice.textContent = listEl
+  
+    // let li2 = document.createElement("li");
+    // let li3 = document.createElement("li");
+    // let li4 = document.createElement("li");
+    
+    // li1.textContent = choices[0];
+    // li2.textContent = choices[1];
+    // li3.textContent = choices[2];
+    // li4.textContent = choices[3];
+    // let quizChoice = choices.choices;
+
+    
+    // multipleChoice.textContent = quizChoice;
+    
 }    
     
 
-       
+    
     
     // //to list multiple choices
+    // let quizChoices = questions[quizQuestions].choices
     // quizChoices.forEach(function (createList) {
     //     let choiceOption = document.createElement("li");
-    //     choiceOption.textContent = createList;
-    //     questionBox.appendChild(choiceList);
+    //     let quizChoices = questions[quizQuestions].choices
+    //     choiceOption.textContent = quizChoices;
+    //     multipleChoice.append(quizChoices);
     //     choiceList.appendChild(choiceOption);
     //     choiceOption.addEventListener("click", (grade));
     // });
 
-console.log(multipleChoice)
+
 
 
 

@@ -14,15 +14,21 @@
             <div class="timer"></div>
         </header>
 
-        <div class="container">
-            <div class="questions">
+        <div class="container" id="initial-text">
+            <div>
                 <h1>Coding Quiz</h1>
                 <p>Try to answer the following coding questions before the timer runs out. 
                 Be careful! Every wrong answer results in a 10 second deduction.</p>
-                <!--list of possible answers-->
-                <ul id="multiple-choice"></ul>
                 <!--start button-->
                 <button class="start-button">Start!</button>
+            </div>
+        </div>
+
+        <div class="container" id="question-content">
+            <div class="questions">
+                <p id="question-text"></p>
+                <!--list of possible answers-->
+                <ul id="multiple-choice"></ul>
             </div>
         </div>
 
