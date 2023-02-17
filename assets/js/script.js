@@ -44,6 +44,9 @@ var questions = [
 var multipleChoice = document.querySelector("#multiple-choice");
 var initialText = document.querySelector("#initial-text");
 var quizQuestions = 0;
+var currentQuestionsIndex = 0;
+var score = 0
+var deduction = 5
 
 var questionBox = document.querySelector("#question-content");
 
@@ -67,23 +70,18 @@ var timerInterval = setInterval(function() {
     }
 }, 1000);
 //starts questions
-render(quizQuestions);
+render()
+renderQuestion();
 
 });
 
 //generates quiz questions
-function render(quizQuestions) {
+function render() {
     initialText.setAttribute("style", "display:none;")
-    // var question = questions[0]
-    // questionBox.textContent = "";
-    // var quizQuestion = question.question;
-    // questionBox.textContent = quizQuestion;
-
 }
 
-    var currentQuestionsIndex = 0;
-    var score = 0
-    var deduction = 5
+function renderQuestion() {
+
     var question = questions[currentQuestionsIndex];
     var titleEl = document.getElementById('question-text');
     titleEl.textContent = question.question;
@@ -102,7 +100,7 @@ function render(quizQuestions) {
         multipleChoice.appendChild(choiceNode);  
         choiceNode.addEventListener("click", (grade)) 
 };
-
+}
 //grade answer
 function grade(event) {
     var button = event.target;
@@ -111,8 +109,10 @@ function grade(event) {
         var gradingDiv = document.createElement("div");
         gradingDiv.setAttribute('id', 'gradingDiv');
 
-
-    if (button.textContent == questions[currentQuestionsIndex].answer) {
+        console.log(button)
+        console.log(button.value)
+        console.log(questions[currentQuestionsIndex].answer)
+    if (button.value === questions[currentQuestionsIndex].answer) {
         score ++;
         multipleChoice.textContent = "Great! That answer is correct";
     } else {
@@ -120,78 +120,18 @@ function grade(event) {
         multipleChoice.textContent = "Incorrect. The correct answer is " + questions[currentQuestionsIndex].answer;
     }
 }
+    currentQuestionsIndex++;
+    renderQuestion()
 }
 
 
-    // multipleChoice.textContent = "";
-    // // create list element
-    // let listEl = document.createElement("ul");
-    // //create list items
-    // let choiceOne = document.createElement("li");
-    // let choiceTwo = document.createElement("li");
-    // let choiceThree = document.createElement("li");
-    // let choiceFour = document.createElement("li");
-    // choiceOne.textContent = question.choices[0];
-    // choiceTwo.textContent = question.choices[1];
-    // choiceThree.textContent = question.choices[2];
-    // choiceFour.textContent = question.choices[3];
-
-    //  //append list items to list element
-    //  listEl.appendChild(choiceOne);
-    //  listEl.appendChild(choiceTwo);
-    //  listEl.appendChild(choiceThree);
-    //  listEl.appendChild(choiceFour);
-    
-    // //append list to multiple-choice ul
-    // multipleChoice.appendChild(listEl);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-    // multipleChoice.textContent = listEl
   
-    // let li2 = document.createElement("li");
-    // let li3 = document.createElement("li");
-    // let li4 = document.createElement("li");
-    
-    // li1.textContent = choices[0];
-    // li2.textContent = choices[1];
-    // li3.textContent = choices[2];
-    // li4.textContent = choices[3];
-    // let quizChoice = choices.choices;
-
-    
-    // multipleChoice.textContent = quizChoice;
-    
-
-    
-
-    
-    
-    // //to list multiple choices
-    // let quizChoices = questions[quizQuestions].choices
-    // quizChoices.forEach(function (createList) {
-    //     let choiceOption = document.createElement("li");
-    //     let quizChoices = questions[quizQuestions].choices
-    //     choiceOption.textContent = quizChoices;
-    //     multipleChoice.append(quizChoices);
-    //     choiceList.appendChild(choiceOption);
-    //     choiceOption.addEventListener("click", (grade));
-    // });
 
 
 
 
 
-// startButton.addEventListener("click", countdown) KEEP TO REVERT TO ORIGINAL
+
+
+
+
