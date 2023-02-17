@@ -1,6 +1,6 @@
 var startButton = document.querySelector(".start-button")
 var timeLeft = document.querySelector(".timer")
-var secondsLeft = 75;
+var secondsLeft = 60;
 
 var questions = [ 
     {
@@ -42,14 +42,21 @@ var questions = [
 
 
 var multipleChoice = document.querySelector("#multiple-choice");
-var initialText = document.querySelector("#initial-text");
+var questionResult = document.querySelector("#question-result")
+var initialText = document.querySelector("#initial-content");
+var questionBox = document.querySelector("#question-content");
+var resultBox = document.querySelector("#result-content")
 var quizQuestions = 0;
 var currentQuestionsIndex = 0;
 var score = 0
 var deduction = 5
 
-var questionBox = document.querySelector("#question-content");
 
+
+//to reset if timer runs out 
+function startQuiz() {
+    initialText.setAttribute("style", "visibility: show;")
+}
 //hides question-box div
 function initialScreen () {
     questionBox.setAttribute("style", "visibility:hidden;")
@@ -58,6 +65,7 @@ initialScreen()
 
 startButton.addEventListener("click", function() {
     questionBox.setAttribute("style", "visibility:show;")
+    
 //starts timer on click
 var timerInterval = setInterval(function() {
     if (secondsLeft > 0) {
@@ -66,8 +74,9 @@ var timerInterval = setInterval(function() {
     } else {
         timeLeft.textContent = "GAME OVER"
         clearInterval(timerInterval);
-        return;
+        gameOver()
     }
+    
 }, 1000);
 //starts questions
 render()
@@ -75,9 +84,11 @@ renderQuestion();
 
 });
 
+
 //generates quiz questions
 function render() {
     initialText.setAttribute("style", "display:none;")
+    
 }
 
 function renderQuestion() {
@@ -106,32 +117,41 @@ function grade(event) {
     var button = event.target;
 
     if (button.matches("button")) {
-        var gradingDiv = document.createElement("div");
-        gradingDiv.setAttribute('id', 'gradingDiv');
+        // var gradingDiv = document.createElement("div");
+        // gradingDiv.setAttribute('id', 'gradingDiv');
 
         console.log(button)
         console.log(button.value)
         console.log(questions[currentQuestionsIndex].answer)
     if (button.value === questions[currentQuestionsIndex].answer) {
         score ++;
-        multipleChoice.textContent = "Great! That answer is correct";
+        resultBox.textContent = "Great! That answer is correct";
     } else {
         secondsLeft = secondsLeft - deduction;
-        multipleChoice.textContent = "Incorrect. The correct answer is " + questions[currentQuestionsIndex].answer;
+        resultBox.textContent = "Incorrect. The correct answer is " + questions[currentQuestionsIndex].answer;
     }
 }
-    currentQuestionsIndex++;
-    renderQuestion()
+currentQuestionsIndex++;
+
+if (currentQuestionsIndex >= questions.length) {
+    gameOver();
+} else {
+renderQuestion()
+};
 }
 
+function gameOver() {
+    questionBox.innerHTML = "";
+    timeLeft.innerHTML = "";
+    questionBox.setAttribute("style", "visibility:hidden")
+    var resultNode = document.getElementById('result-content');
+    resultNode.textContent = "Time Is Up"
 
-  
+    //final score calculation
+    if (timeLeft >= 0) {
+        var finalScore = timeLeft;
+        var scoreDisplay = document.getElementById('score');
+        scoreDisplay.textContent = "You scored " + finalScore + " points!"
 
-
-
-
-
-
-
-
-
+    }
+}
