@@ -147,11 +147,55 @@ function gameOver() {
     var resultNode = document.getElementById('result-content');
     resultNode.textContent = "Time Is Up"
 
-    //final score calculation
-    if (timeLeft >= 0) {
-        var finalScore = timeLeft;
-        var scoreDisplay = document.getElementById('score');
-        scoreDisplay.textContent = "You scored " + finalScore + " points!"
-
+    //final score calculation and display
+    if (secondsLeft >= 0) {
+        var finalScore = secondsLeft;
+        console.log(finalScore)
+        var scoreDisplay = document.createElement('p');
+        scoreDisplay.textContent = "You scored " + finalScore + " points!";
+        resultBox.appendChild(scoreDisplay)
     }
+
+    var highScores = document.createElement("label");
+    highScores.setAttribute("id", "highScores");
+    highScores.textContent = "Enter your Nickname: "
+    resultBox.appendChild(highScores);
+    
+    
+    //input area
+    var createForm = document.createElement("input");
+    createForm.setAttribute("type", "text");
+    createForm.setAttribute("id", "nickname");
+    createForm.textContent = "";
+    resultBox.appendChild(createForm);
+
+    //submit button
+    var submit = document.createElement("button");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("id", "submit");
+    submit.textContent = "Save";
+    resultBox.appendChild(submit);
+
+    // submit.addEventListener("click", function() {
+    //     var nickname = createForm.value;
+        
+    //     if (!nickname) {
+    //         window.alert("Please enter a nickname");
+    //     } else {
+    //         var scoreStorage = {
+    //             nickname: nickname,
+    //             score: secondsLeft
+    //         }
+    //         var highScores = localStorage.getItem("highScores");
+    //         if (!highScores) {
+    //             highScores = [];
+    //         } else {
+    //             highScores = JSON.parse(highScores);
+    //         }
+    //         highScores.push(scoreStorage);
+    //         var addScore = JON.stringify(highScores);
+    //         localStorage.setItem("highScores", addScore);
+    //         window.location.replace("./scoreStorage.html")
+    //     }
+    // });
 }
