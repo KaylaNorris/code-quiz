@@ -46,20 +46,19 @@ var questionResult = document.querySelector("#question-result")
 var initialText = document.querySelector("#initial-content");
 var questionBox = document.querySelector("#question-content");
 var resultBox = document.querySelector("#result-content")
+var resultsDiv = document.querySelector("#results")
 var quizQuestions = 0;
 var currentQuestionsIndex = 0;
 var score = 0
 var deduction = 5
+var timerInterval = 0
 
 
 
-//to reset if timer runs out 
-function startQuiz() {
-    initialText.setAttribute("style", "visibility: show;")
-}
 //hides question-box div
 function initialScreen () {
     questionBox.setAttribute("style", "visibility:hidden;")
+    resultsDiv.setAttribute("style", "visibility:hidden;")
 }
 initialScreen()
 
@@ -144,8 +143,10 @@ function gameOver() {
     questionBox.innerHTML = "";
     timeLeft.innerHTML = "";
     questionBox.setAttribute("style", "visibility:hidden")
+    resultsDiv.setAttribute("style", "visibility:show;")
     var resultNode = document.getElementById('result-content');
     resultNode.textContent = "Time Is Up"
+
 
     //final score calculation and display
     if (secondsLeft >= 0) {
@@ -153,6 +154,8 @@ function gameOver() {
         console.log(finalScore)
         var scoreDisplay = document.createElement('p');
         scoreDisplay.textContent = "You scored " + finalScore + " points!";
+        //stop the timer
+        timeLeft.setAttribute("style", "display:none")
         resultBox.appendChild(scoreDisplay)
     }
 
@@ -176,16 +179,28 @@ function gameOver() {
     submit.textContent = "Save";
     resultBox.appendChild(submit);
 
-    // submit.addEventListener("click", function() {
-    //     var nickname = createForm.value;
+    submit.addEventListener("click", function() {
+        var nickname = createForm.value;
         
-    //     if (!nickname) {
-    //         window.alert("Please enter a nickname");
-    //     } else {
-    //         var scoreStorage = {
-    //             nickname: nickname,
-    //             score: secondsLeft
-    //         }
+        if (!nickname) {
+            window.alert("Please enter a nickname");
+        } else {
+            var scoreStorage = {
+                nickname: nickname,
+                score: secondsLeft
+            }
+            console.log(scoreStorage);
+            var highScores = localStorage.getItem("highScores");
+            if (highScores === null) {
+                highScores = [];
+            } else {
+                highScores = JSON.parse(highScores);
+            }
+            highScores.push(scoreStorage);
+            var leaderBoard = JSON.stringify(highScores);
+            localStorage.setItem("highScores", leaderBoard);
+            window.location.replace("./leaderBoard.html")
+            }
     //         var highScores = localStorage.getItem("highScores");
     //         if (!highScores) {
     //             highScores = [];
@@ -198,4 +213,6 @@ function gameOver() {
     //         window.location.replace("./scoreStorage.html")
     //     }
     // });
-}
+    });
+};
+
