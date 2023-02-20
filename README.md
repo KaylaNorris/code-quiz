@@ -17,7 +17,7 @@ After the start button is clicked, questions will appear and the timer starts. S
 ![Screenshot 3](assets/images/code-quiz-screenshot3.png)
 ![Screenshot 4](assets/images/code-quiz-screenshot4.png)
 
- https://kaylanorris.github.io/code0quiz/
+ https://kaylanorris.github.io/code-quiz/
 
 ## License
 
