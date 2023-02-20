@@ -1,6 +1,7 @@
 var startButton = document.querySelector(".start-button")
 var timeLeft = document.querySelector(".timer")
 var secondsLeft = 60;
+var timeDisplay = document.querySelector(".time-display")
 
 var questions = [ 
     {
@@ -42,7 +43,6 @@ var questions = [
 
 
 var multipleChoice = document.querySelector("#multiple-choice");
-var questionResult = document.querySelector("#question-result")
 var initialText = document.querySelector("#initial-content");
 var questionBox = document.querySelector("#question-content");
 var resultBox = document.querySelector("#result-content")
@@ -51,7 +51,6 @@ var quizQuestions = 0;
 var currentQuestionsIndex = 0;
 var score = 0
 var deduction = 5
-var timerInterval = 0
 
 
 
@@ -74,13 +73,16 @@ renderQuestion();
 });
 
 function startTime() {
-var timerInterval = setInterval(function() {
-    if (secondsLeft > 0) {
-        timeLeft.textContent = "Timer: " + secondsLeft;
-        secondsLeft--;
-    } else {
-        timeLeft.textContent = "GAME OVER"
-        clearInterval(timerInterval);
+timeLeft = setInterval(function() {
+    secondsLeft--;
+    timeDisplay.textContent = "Timer: " + secondsLeft;
+    if (secondsLeft <= 0) {
+        timeDisplay.textContent = "GAME OVER"
+        clearInterval(timeLeft);
+    } 
+
+    if (secondsLeft === 0) {
+        gameOver()
     }
     
 }, 1000);
@@ -108,6 +110,7 @@ function renderQuestion() {
         choiceNode.setAttribute('value', choice);
 
         choiceNode.textContent = i + 1 + '. ' + choice;
+    
 
         //display on the page
         multipleChoice.appendChild(choiceNode);  
@@ -116,12 +119,10 @@ function renderQuestion() {
 }
 //grade answer
 function grade(event) {
+    resultsDiv.setAttribute("style", "visibility:show;")
     var button = event.target;
 
     if (button.matches("button")) {
-        // var gradingDiv = document.createElement("div");
-        // gradingDiv.setAttribute('id', 'gradingDiv');
-
         console.log(button)
         console.log(button.value)
         console.log(questions[currentQuestionsIndex].answer)
@@ -143,6 +144,8 @@ renderQuestion()
 }
 
 function gameOver() {
+    
+    timeDisplay.textContent = "GAME OVER"
     questionBox.innerHTML = "";
     timeLeft.innerHTML = "";
     questionBox.setAttribute("style", "visibility:hidden;")
@@ -158,6 +161,7 @@ function gameOver() {
         var scoreDisplay = document.createElement('p');
         scoreDisplay.textContent = "You scored " + finalScore + " points!";
         resultBox.appendChild(scoreDisplay)
+        clearInterval(timeLeft)
     }
 
 
@@ -181,6 +185,8 @@ function gameOver() {
     submit.textContent = "Save";
     resultBox.appendChild(submit);
 
+
+//save nickname to leaderboard
     submit.addEventListener("click", function() {
         var nickname = createForm.value;
         
