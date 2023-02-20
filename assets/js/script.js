@@ -66,6 +66,14 @@ startButton.addEventListener("click", function() {
     questionBox.setAttribute("style", "visibility:show;")
     
 //starts timer on click
+startTime();
+//starts questions
+render()
+renderQuestion();
+
+});
+
+function startTime() {
 var timerInterval = setInterval(function() {
     if (secondsLeft > 0) {
         timeLeft.textContent = "Timer: " + secondsLeft;
@@ -73,15 +81,10 @@ var timerInterval = setInterval(function() {
     } else {
         timeLeft.textContent = "GAME OVER"
         clearInterval(timerInterval);
-        gameOver()
     }
     
 }, 1000);
-//starts questions
-render()
-renderQuestion();
-
-});
+}
 
 
 //generates quiz questions
@@ -142,7 +145,7 @@ renderQuestion()
 function gameOver() {
     questionBox.innerHTML = "";
     timeLeft.innerHTML = "";
-    questionBox.setAttribute("style", "visibility:hidden")
+    questionBox.setAttribute("style", "visibility:hidden;")
     resultsDiv.setAttribute("style", "visibility:show;")
     var resultNode = document.getElementById('result-content');
     resultNode.textContent = "Time Is Up"
@@ -154,10 +157,9 @@ function gameOver() {
         console.log(finalScore)
         var scoreDisplay = document.createElement('p');
         scoreDisplay.textContent = "You scored " + finalScore + " points!";
-        //stop the timer
-        timeLeft.setAttribute("style", "display:none")
         resultBox.appendChild(scoreDisplay)
     }
+
 
     var highScores = document.createElement("label");
     highScores.setAttribute("id", "highScores");
@@ -201,18 +203,6 @@ function gameOver() {
             localStorage.setItem("highScores", leaderBoard);
             window.location.replace("./leaderBoard.html")
             }
-    //         var highScores = localStorage.getItem("highScores");
-    //         if (!highScores) {
-    //             highScores = [];
-    //         } else {
-    //             highScores = JSON.parse(highScores);
-    //         }
-    //         highScores.push(scoreStorage);
-    //         var addScore = JON.stringify(highScores);
-    //         localStorage.setItem("highScores", addScore);
-    //         window.location.replace("./scoreStorage.html")
-    //     }
-    // });
     });
 };
 
